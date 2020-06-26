@@ -1,0 +1,18 @@
+decimal
+
+-notes
+marker -notes
+ram 
+decimal
+
+262 value zc4
+294 value zd4
+330 value ze4
+\ 349 value zf4
+\ 392 value zg4
+\ 440 value za4
+\ 493 value zb4
+
+: qrt Hertz 250 note
+
+ram

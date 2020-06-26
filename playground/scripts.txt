@@ -1,0 +1,50 @@
+
+Flash forth: (tested and working)
+
+./avrdude -C ./avrdude.conf -p m328p -P /dev/ttyUSB0 -c usbasp -b 57600 -U flash:w:../avr/hex/ff_uno.hex:i
+
+
+------------
+
+picocom --imap lfcrlf -d 8 -p n -f n -s msend /dev/ttyUSB0 -b 38400
+
+putty -serial /dev/ttyUSB0 -sercfg 38400
+
+picocom -b 38400 -r -l /dev/ttyUSB0
+------------
+
+
+decimal
+\ porta
+34 constant porta	\ Port A Data Register
+33 constant ddra	\ Port A Data Direction Register
+32 constant pina	\ Port A Input Pins
+
+decimal
+\ PORTB
+37 constant portb	\ Port B Data Register
+36 constant ddrb	\ Port B Data Direction Register
+35 constant pinb	\ Port B Input Pins
+\ PORTC
+40 constant portc	\ Port C Data Register
+39 constant ddrc	\ Port C Data Direction Register
+38 constant pinc	\ Port C Input Pins
+\ PORTD
+43 constant portd	\ Port D Data Register
+42 constant ddrd	\ Port D Data Direction Register
+41 constant pind	\ Port D Input Pins
+
+2 base !            \ bascule en base binaire
+11111111 DDRB c!    \ positionne tous bits PORTB en sortie
+
+: stt cr dup @ .bin cr dup 1- @ .bin cr 2- @ .bin cr ;
+
+: .bin  ( c ---)
+    base @ >r                       \ récupère base numérique courante
+    2 base !                        \ bascule en binaire
+    0 <# # # # # # # # # #> type    \ convertit octet en texte binaire
+                                    \ et l'affiche sur 8 digits
+    r> base ! ;                     \ restaure la base numérique initiale
+
+: .bin base @ >r 2 base ! 0 <# # # # # # # # # #> type r> base ! ;  
+

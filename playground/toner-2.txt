@@ -1,0 +1,12 @@
+
+
+-toner-2
+merker -toner-3
+
+hex
+40 2a c! \ make OC0A (I/O Line 6, PD-6) an output pin
+42 44 c! \ toggle OC0A on compare match, CTC mode
+FF 47 c! \ maximum count in OCR0A to compare
+3 45 c! \ select /64, prescaler=3, start counter
+
+\ 0 45 c! \ prescaler=0, no clock to timer/counter0
